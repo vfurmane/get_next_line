@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 11:34:48 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/01/13 14:26:56 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/01/13 15:52:26 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int		get_next_line(int fd, char **line)
 {
 	static t_list	*line_list;
 	int				result;
+	int				line_read;
 	t_list			*elm;
 
 	if (fd < 0 || line == NULL || BUFFER_SIZE < 0 || read(fd, NULL, 0) == -1)
@@ -97,12 +98,17 @@ int		get_next_line(int fd, char **line)
 	if ((elm = ft_get_fd_in_list(line_list, fd)) == NULL)
 		if ((elm = ft_lstadd_front(&line_list, fd)) == NULL)
 			return (-1);
+	line_read = 0;
 	result = 1;
 	while (ft_strchr(elm->content, '\n') == NULL)
-		if ((result = ft_read(fd, elm)) == 0)
+		if (ft_read(fd, elm) == 0)
 			break ;
 		else if (result == -1)
 			return (-1);
+		else
+			line_read++;
+	if (line_read == 0 && ft_strchr(elm->content, '\n') == NULL)
+		result = 0;
 	if ((*line = ft_splitc(&elm->content)) == NULL)
 		return (-1);
 	return (result);

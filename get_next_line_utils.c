@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:05:34 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/01/13 12:54:09 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/01/13 15:20:32 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,9 @@ char	*ft_strchr(const char *str, int chr)
 	if ((unsigned char)chr == '\0')
 		return ((char *)&str[i]);
 	return (NULL);
+}
+
+void	ft_free_elm(t_list *elm)
+{
+	(void) elm;
 }
