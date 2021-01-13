@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 11:34:48 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/01/13 15:52:26 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/01/13 20:17:51 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_list	*ft_lstadd_front(t_list **lst, int fd)
 	new->fd = fd;
 	if ((new->content = malloc(sizeof(*(new->content)))) == NULL)
 		return (NULL);
+	new->content[0] = '\0';
 	new->next = *lst;
 	*lst = new;
 	return (*lst);
@@ -108,7 +109,7 @@ int		get_next_line(int fd, char **line)
 		else
 			line_read++;
 	if (line_read == 0 && ft_strchr(elm->content, '\n') == NULL)
-		result = 0;
+		return (ft_free_elm(&line_list, elm));
 	if ((*line = ft_splitc(&elm->content)) == NULL)
 		return (-1);
 	return (result);
