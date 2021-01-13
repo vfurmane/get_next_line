@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 11:34:48 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/01/13 12:58:22 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/01/13 14:26:56 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,21 @@ int		ft_read(int fd, t_list *elm)
 {
 	int		ret;
 	int		result;
-	char	buffer[BUFFER_SIZE + 1];
+	char	*buffer;
 
+	if ((buffer = malloc((BUFFER_SIZE + 1) * sizeof(*buffer))) == NULL)
+		return (-1);
 	result = 1;
 	if ((ret = read(fd, buffer, BUFFER_SIZE)))
 	{
+		if (ret == -1)
+			return (-1);
 		buffer[ret] = '\0';
 		elm->content = ft_strdupcat(elm->content, buffer);
 	}
 	else
 		result = 0;
+	free(buffer);
 	return (result);
 }
 
@@ -87,7 +92,7 @@ int		get_next_line(int fd, char **line)
 	int				result;
 	t_list			*elm;
 
-	if (fd < 0 || line == NULL || BUFFER_SIZE < 0 || read(fd, NULL, 0) == -1) // A protéger
+	if (fd < 0 || line == NULL || BUFFER_SIZE < 0 || read(fd, NULL, 0) == -1)
 		return (-1);
 	if ((elm = ft_get_fd_in_list(line_list, fd)) == NULL)
 		if ((elm = ft_lstadd_front(&line_list, fd)) == NULL)
@@ -96,6 +101,8 @@ int		get_next_line(int fd, char **line)
 	while (ft_strchr(elm->content, '\n') == NULL)
 		if ((result = ft_read(fd, elm)) == 0)
 			break ;
+		else if (result == -1)
+			return (-1);
 	if ((*line = ft_splitc(&elm->content)) == NULL)
 		return (-1);
 	return (result);
