@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 11:34:48 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/01/12 18:55:49 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/01/13 12:58:22 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,6 @@ t_list	*ft_get_fd_in_list(t_list *lst, int fd)
 			return (lst);
 		else
 			lst = lst->next;
-	return (NULL);
-}
-
-char	*ft_strchr(const char *str, int chr)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == (unsigned char)chr)
-			return ((char*)&str[i]);
-		i++;
-	}
-	if ((unsigned char)chr == '\0')
-		return ((char *)&str[i]);
 	return (NULL);
 }
 
@@ -80,31 +64,38 @@ char	*ft_strdupcat(char *dest, char *src)
 	return (res);
 }
 
+int		ft_read(int fd, t_list *elm)
+{
+	int		ret;
+	int		result;
+	char	buffer[BUFFER_SIZE + 1];
+
+	result = 1;
+	if ((ret = read(fd, buffer, BUFFER_SIZE)))
+	{
+		buffer[ret] = '\0';
+		elm->content = ft_strdupcat(elm->content, buffer);
+	}
+	else
+		result = 0;
+	return (result);
+}
+
 int		get_next_line(int fd, char **line)
 {
 	static t_list	*line_list;
-	int				ret;
 	int				result;
-	char			buffer[BUFFER_SIZE + 1];
 	t_list			*elm;
 
-	if (fd < 0 || line == NULL) // A protéger
+	if (fd < 0 || line == NULL || BUFFER_SIZE < 0 || read(fd, NULL, 0) == -1) // A protéger
 		return (-1);
 	if ((elm = ft_get_fd_in_list(line_list, fd)) == NULL)
 		if ((elm = ft_lstadd_front(&line_list, fd)) == NULL)
 			return (-1);
 	result = 1;
 	while (ft_strchr(elm->content, '\n') == NULL)
-	{
-		if ((ret = read(fd, buffer, BUFFER_SIZE)))
-			buffer[ret] = '\0';
-		else
-		{
-			result = 0;
+		if ((result = ft_read(fd, elm)) == 0)
 			break ;
-		}
-		elm->content = ft_strdupcat(elm->content, buffer);
-	}
 	if ((*line = ft_splitc(&elm->content)) == NULL)
 		return (-1);
 	return (result);

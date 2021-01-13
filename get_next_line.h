@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:26:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/01/12 17:57:45 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/01/13 12:54:22 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdlib.h>
 # include <stdio.h> /* ===== DELETE ===== */
 # include <unistd.h>
-# define BUFFER_SIZE 32
 
 typedef struct		s_list
 {
@@ -27,5 +26,6 @@ typedef struct		s_list
 
 int					get_next_line(int fd, char **line);
 char				*ft_splitc(char **str);
+char				*ft_strchr(const char *str, int chr);
 
 #endif
