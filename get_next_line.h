@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:26:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/01/13 19:49:59 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/01/13 21:10:53 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define GET_NEXT_LINE_H
 
 # include <stdlib.h>
-# include <stdio.h> /* ===== DELETE ===== */
 # include <unistd.h>
 
 typedef struct		s_list

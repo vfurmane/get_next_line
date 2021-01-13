@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:05:34 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/01/13 21:09:24 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/01/13 21:11:04 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*ft_strchr(const char *str, int chr)
 	return (NULL);
 }
 
-int	ft_free_elm(t_list **list, t_list *elm)
+int		ft_free_elm(t_list **list, t_list *elm)
 {
 	t_list	*lst;
 
