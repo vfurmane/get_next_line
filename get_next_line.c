@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 11:34:48 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/01/14 12:46:06 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/01/14 14:37:16 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,5 @@ int		get_next_line(int fd, char **line)
 		return (ft_free_elm(&line_list, elm, line));
 	if ((*line = ft_splitc(&elm->content)) == NULL)
 		return (-1);
-	result = result != 0;
-	return (result);
+	return (1);
 }
