@@ -6,11 +6,28 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:05:34 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/01/15 10:58:38 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/08/04 16:42:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+t_list	*ft_lstadd_front(t_list **lst, int fd)
+{
+	t_list	*new;
+
+	new = malloc(sizeof(*new));
+	if (new == NULL)
+		return (NULL);
+	new->fd = fd;
+	new->content = malloc(sizeof(*(new->content)));
+	if (new->content == NULL)
+		return (NULL);
+	new->content[0] = '\0';
+	new->next = *lst;
+	*lst = new;
+	return (*lst);
+}
 
 char	*ft_trimc(const char *str)
 {
@@ -20,7 +37,8 @@ char	*ft_trimc(const char *str)
 
 	if (str[0] == '\0')
 	{
-		if ((new_content = malloc(sizeof(*new_content))) == NULL)
+		new_content = malloc(sizeof(*new_content));
+		if (new_content == NULL)
 			return (NULL);
 		new_content[0] = '\0';
 		return (new_content);
@@ -29,7 +47,8 @@ char	*ft_trimc(const char *str)
 	str_len = 0;
 	while (str[str_len])
 		str_len++;
-	if ((new_content = malloc((str_len + 1) * sizeof(*new_content))) == NULL)
+	new_content = malloc((str_len + 1) * sizeof(*new_content));
+	if (new_content == NULL)
 		return (NULL);
 	i = -1;
 	while (str[++i])
@@ -48,14 +67,16 @@ char	*ft_splitc(char **str)
 	str_len = 0;
 	while ((*str)[str_len] && (*str)[str_len] != '\n')
 		str_len++;
-	if ((new_str = malloc((str_len + 1) * sizeof(*new_str))) == NULL)
+	new_str = malloc((str_len + 1) * sizeof(*new_str));
+	if (new_str == NULL)
 		return (NULL);
 	i = -1;
 	while (++i < str_len)
 		new_str[i] = (*str)[i];
 	new_str[i] = '\0';
 	new_content = &(*str)[i];
-	if ((new_content = ft_trimc(new_content)) == NULL)
+	new_content = ft_trimc(new_content);
+	if (new_content == NULL)
 		return (NULL);
 	free(*str);
 	*str = new_content;
@@ -70,7 +91,7 @@ char	*ft_strchr(const char *str, int chr)
 	while (str[i])
 	{
 		if (str[i] == (unsigned char)chr)
-			return ((char*)&str[i]);
+			return ((char *)&str[i]);
 		i++;
 	}
 	if ((unsigned char)chr == '\0')
@@ -78,7 +99,7 @@ char	*ft_strchr(const char *str, int chr)
 	return (NULL);
 }
 
-int		ft_free_elm(t_list **list, t_list *elm)
+int	ft_free_elm(t_list **list, t_list *elm)
 {
 	t_list	*lst;
 
